@@ -14,7 +14,7 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libmm-omxcore \
     libOmxCore \
-#    Torch
+    Torch
     
 # Graphics 
 PRODUCT_PACKAGES += \
@@ -35,8 +35,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     dexpreopt \
     gps.u8818
-#        lights.c8812 \
-#	FM
 
 # Camera
 #PRODUCT_PACKAGES += \

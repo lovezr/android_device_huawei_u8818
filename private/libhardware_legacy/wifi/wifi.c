@@ -172,12 +172,12 @@ static int insmod(const char *filename, const char *args)
 	        memset(x,0,8);
 	        y=0;
 	        huawei_oem_rapi_streaming_function(3,0,0,0,0,&y,x);
-	        LOGI("QIWU:huawei_oem_rapi_streaming_function %p %x %x",x,x[0],y);
+	        //LOGI("QIWU:huawei_oem_rapi_streaming_function %p %x %x",x,x[0],y);
 	        sprintf(mac_param,"mac_param=%02X:%02X:%02X:%02X:%02X:%02X %s",x[5],x[4],x[3],x[2],x[1],x[0],args);
 	} else {
                 sprintf(mac_param,"mac_param=%s %s",cust_mac_param,args);
         }
-        LOGI("QIWU:Got MAC Address: %s ",mac_param);
+        //LOGI("QIWU:Got MAC Address: %s ",mac_param);
         ret = init_module(module, size, mac_param);
 
     free(module);
@@ -762,7 +762,7 @@ int wifi_start_supplicant_common(const char *config_file)
 
 int wifi_start_supplicant()
 {
-	LOGD("k0:	wifi_start_supplicant");
+	//LOGD("k0:	wifi_start_supplicant");
     return wifi_start_supplicant_common(SUPP_CONFIG_FILE);
 }
 
@@ -773,7 +773,7 @@ int wifi_start_p2p_supplicant()
 
 int wifi_stop_supplicant()
 {
-		LOGD("k0:	wifi_stop_supplicant");
+	//	LOGD("k0:	wifi_stop_supplicant");
     char supp_status[PROPERTY_VALUE_MAX] = {'\0'};
     int count = 50; /* wait at most 5 seconds for completion */
 

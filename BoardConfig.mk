@@ -99,15 +99,15 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 # Kernel 
 #ENABLE_BCM_4330 := true
 #BT_BCM_VER_3 := true
-#TARGET_KERNEL_SOURCE := kernel/huawei/c8812
-#TARGET_KERNEL_CONFIG := cyanogen_c8812_defconfig
+#TARGET_KERNEL_SOURCE := kernel/huawei/G300
+#TARGET_KERNEL_CONFIG := u8818_defconfig
 TARGET_PREBUILT_KERNEL := device/huawei/u8818/kernel
 BOARD_KERNEL_CMDLINE := console=ttyDCC0 androidboot.hardware=huawei
 BOARD_KERNEL_BASE := 0x00200000
-BOARD_PAGE_SIZE := 4096
+BOARD_PAGE_SIZE := 2048
 
-TARGET_RECOVERY_INITRC := device/huawei/c8812/recovery/etc/init.rc
-TARGET_PREBUILT_RECOVERY_KERNEL := device/huawei/c8812/kernel
+TARGET_RECOVERY_INITRC := device/huawei/u8818/recovery/etc/init.rc
+TARGET_PREBUILT_RECOVERY_KERNEL := device/huawei/u8818/kernel
 BOARD_DATA_DEVICE := /dev/block/mmcblk0p13
 BOARD_DATA_FILESYSTEM := ext4
 BOARD_DATA_FILESYSTEM_OPTIONS := rw

@@ -1,5 +1,5 @@
 on early-init
-    # Set init and its forked children's oom_adj.
+# Set init and its forked children's oom_adj.
     write /proc/1/oom_adj -16
 
     start ueventd
@@ -15,7 +15,7 @@ loglevel 3
 
 # setup the global environment
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
-    export LD_LIBRARY_PATH /vendor/lib:/data/cust/lib:/system/lib:/data/datalib
+    export LD_LIBRARY_PATH /vendor/lib:/system/lib
     export ANDROID_BOOTLOGO 1
     export ANDROID_CACHE /cache
     export ANDROID_ROOT /system
@@ -55,21 +55,21 @@ loglevel 3
     mkdir /cache 0771 system cache
     mkdir /config 0500 root root
 
-    # Directory for putting things only root should see.
+# Directory for putting things only root should see.
     mkdir /mnt/secure 0700 root root
 
-    # Directory for staging bindmounts
+# Directory for staging bindmounts
     mkdir /mnt/secure/staging 0700 root root
 
-    # Directory-target for where the secure container
-    # imagefile directory will be bind-mounted
+# Directory-target for where the secure container
+# imagefile directory will be bind-mounted
     mkdir /mnt/secure/asec  0700 root root
 
-    # Secure container public mount points.
+# Secure container public mount points.
     mkdir /mnt/asec  0700 root system
     mount tmpfs tmpfs /mnt/asec mode=0755,gid=1000
 
-    # Filesystem image public mount points.
+# Filesystem image public mount points.
     mkdir /mnt/obb 0700 root system
     mount tmpfs tmpfs /mnt/obb mode=0755,gid=1000
 
@@ -98,7 +98,7 @@ loglevel 3
     mkdir /dev/cpuctl/bg_non_interactive
     chown system system /dev/cpuctl/bg_non_interactive/tasks
     chmod 0777 /dev/cpuctl/bg_non_interactive/tasks
-    # 5.0 %
+# 5.0 %
     write /dev/cpuctl/bg_non_interactive/cpu.shares 52
 
 # Allow everybody to read the xt_qtaguid resource tracking misc dev.
@@ -107,7 +107,7 @@ loglevel 3
 
 on fs
 # mount mtd partitions
-    # Mount /system rw first to give the filesystem a chance to save a checkpoint
+# Mount /system rw first to give the filesystem a chance to save a checkpoint
     mount yaffs2 mtd@system /system
     mount yaffs2 mtd@system /system ro remount
     mount yaffs2 mtd@userdata /data nosuid nodev
@@ -131,7 +131,7 @@ on emmc-fs
     mount vfat loop@/data/iq.img.vfat /data/app_iq_archive rw nosuid nodev
 
 on post-fs
-    # once everything is setup, no need to modify /
+# once everything is setup, no need to modify /
     mount rootfs rootfs / ro remount
 
 # We chown/chmod /cache again so because mount is run as root + defaults
@@ -143,25 +143,25 @@ on post-fs
     chown system cache /cache
     chmod 0771 /cache
 
-    # This may have been created by the recovery system with odd permissions
+# This may have been created by the recovery system with odd permissions
     chown system cache /cache/recovery
     chmod 0770 /cache/recovery
 
-    #change permissions on vmallocinfo so we can grab it from bugreports
+#change permissions on vmallocinfo so we can grab it from bugreports
     chown root log /proc/vmallocinfo
     chmod 0440 /proc/vmallocinfo
 
-    #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
+#change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
     chown root system /proc/kmsg
     chmod 0440 /proc/kmsg
     chown root system /proc/sysrq-trigger
     chmod 0220 /proc/sysrq-trigger
 
-    # create the lost+found directories, so as to enforce our permissions
+# create the lost+found directories, so as to enforce our permissions
     mkdir /cache/lost+found 0770 root root
 
 on post-fs-data
-    # We chown/chmod /data again so because mount is run as root + defaults
+# We chown/chmod /data again so because mount is run as root + defaults
     chown system system /data
     chmod 0771 /data
 
@@ -178,12 +178,12 @@ on post-fs-data
     chown bluetooth system /data/btaddr
     chmod 0660 /data/btaddr
 
-    # Create dump dir and collect dumps.
-    # Do this before we mount cache so eventually we can use cache for
-    # storing dumps on platforms which do not have a dedicated dump partition.
+# Create dump dir and collect dumps.
+# Do this before we mount cache so eventually we can use cache for
+# storing dumps on platforms which do not have a dedicated dump partition.
     mkdir /data/dontpanic 0750 root log
 
-    # Collect apanic data, free resources and re-arm trigger
+# Collect apanic data, free resources and re-arm trigger
     copy /proc/apanic_console /data/dontpanic/apanic_console
     chown root log /data/dontpanic/apanic_console
     chmod 0640 /data/dontpanic/apanic_console
@@ -194,7 +194,7 @@ on post-fs-data
 
     write /proc/apanic_console 1
 
-    # create basic filesystem structure
+# create basic filesystem structure
     mkdir /data/misc
     chmod 01771 /data/misc/
     chown system misc /data/misc/
@@ -203,7 +203,7 @@ on post-fs-data
     mkdir /data/misc/keychain 0771 system system
     mkdir /data/misc/vpn 0770 system vpn
     mkdir /data/misc/systemkeys 0700 system system
-    # give system access to wpa_supplicant.conf for backup and restore
+# give system access to wpa_supplicant.conf for backup and restore
 
     mkdir /data/misc/wifi
     chmod 0770 /data/misc/wifi
@@ -260,6 +260,12 @@ on post-fs-data
 
     # create dalvik-cache, so as to enforce our permissions
     mkdir /data/dalvik-cache 0771 system system
+    chown system system /data/dalvik-cache
+    chmod 0771 /data/dalvik-cache
+
+    mkdir /cache/dalvik-cache 0771 system system
+    chown system system /cache/dalvik-cache
+    chmod 0771 /cache/dalvik-cache
 
     # create resource-cache and double-check the perms
     mkdir /data/resource-cache 0771 system system
@@ -292,7 +298,8 @@ on post-fs-data
 
     chmod 0660 /dev/assd
     chown smartcard smartcard /dev/assd
-
+    # Include extra init file
+    import /system/etc/init.local.rc
 on boot
 # basic network init
     ifup lo
@@ -313,11 +320,11 @@ on boot
     chown root system /sys/module/lowmemorykiller/parameters/minfree
     chmod 0664 /sys/module/lowmemorykiller/parameters/minfree
 
-    # Tweak background writeout
+# Tweak background writeout
     write /proc/sys/vm/dirty_expire_centisecs 200
     write /proc/sys/vm/dirty_background_ratio  5
 
-    # Permissions for System Server and daemons.
+# Permissions for System Server and daemons.
     chown radio system /sys/android_power/state
     chown radio system /sys/android_power/request_state
     chown radio system /sys/android_power/acquire_full_wake_lock
@@ -451,285 +458,6 @@ on property:sys.usb.config=none
     write /sys/class/android_usb/android0/bDeviceClass 0
     setprop sys.usb.state $sys.usb.config
 
-# adb only USB configuration
-# This should only be used during device bringup
-# and as a fallback if the USB manager fails to set a standard configuration
-# /* to support turning on usb mass storage when usb driver is not installed in host.
-#  * change autorun to autorun,mass_storage and autorun,adb to autorun,mass_storage,adb.
-#  * usb mass storage is supported only when mass_storage is included in sys.usb.config
-#  */
-# /* add udisk configution and support multi luns
-#  * lun0 and lun1 are udisk and lun2 is cdrom in google mode, this mode support 3 luns
-#  * lun0 is cdrom in normal mode, this mode support 1 lun
-#  * lun0 and lun1 are udisk in udisk mode, this mode support 2 luns
-#  */
-# /* add configuration autorun,adb 
-#  * when switching to autorun, framework sets sys.usb.config=autorun,adb if adb is enalbed
-#  * but don't set adb in funcitons because only cdrom is used in autorun
-#  */
-# USB autorun mode configuration
-on property:sys.usb.config=autorun,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.cdrom
-    write /sys/class/android_usb/android0/iSerial cleanup
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions mass_storage
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=autorun,mass_storage,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.cdrom
-    write /sys/class/android_usb/android0/iSerial cleanup
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions mass_storage
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-# USB google mode configuration
-on property:sys.usb.config=mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1037
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 3
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 2
-    write /sys/class/android_usb/android0/f_mass_storage/lun2/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=mass_storage,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1038
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 3
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 2
-    write /sys/class/android_usb/android0/f_mass_storage/lun2/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-
-# /* cleanup usb serial number for normal and factory mode */
-# USB normal mode configuration
-# /* add adb and diag port to make sure diag port is enabled */
-on property:sys.usb.config=serial,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.normal
-    write /sys/class/android_usb/android0/iSerial cleanup
-    write /sys/class/android_usb/android0/f_diag/clients  diag
-    write /sys/class/android_usb/android0/f_serial/transports smd,smd
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions serial,mass_storage,adb,diag
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=serial,mass_storage,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.normal
-    write /sys/class/android_usb/android0/iSerial cleanup
-    write /sys/class/android_usb/android0/f_diag/clients  diag
-    write /sys/class/android_usb/android0/f_serial/transports smd,smd
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions serial,mass_storage,adb,diag
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-
-# USB tethering mode configuration
-on property:sys.usb.config=rndis
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1039
-    write /sys/class/android_usb/android0/f_rndis/wceis 1
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=rndis,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1050
-    write /sys/class/android_usb/android0/f_rndis/wceis 1
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-
-# USB MTP mode configuration
-on property:sys.usb.config=mtp
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1051
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=mtp,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1052
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-
-# USB PTP mode configuration
-on property:sys.usb.config=ptp
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1053
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=ptp,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1054
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-
-# modify USB accessory vid and pid to match google
-# USB accessory configuration
-on property:sys.usb.config=accessory
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d00
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=accessory,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct 2d01
-    write /sys/class/android_usb/android0/functions $sys.usb.config
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-# /* DTS2012011801998 chenxi 20120203 end >*/
-
-# USB udisk mode configuration
-# /* lun0/file and lun1/file will be configured by vold */
-on property:sys.usb.config=udisk,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1005
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 2
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index none
-    write /sys/class/android_usb/android0/functions mass_storage
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=udisk,mass_storage,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct 1005
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 2
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index none
-    write /sys/class/android_usb/android0/functions mass_storage
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-   
-# /* DTS2012022400909 chenxi 20120224 end > */
-# /* DTS2012032106408 chenxi 20120323 end > */
-
-# /* < DTS2012041000776 chenxi 20120410 begin */
-on property:sys.usb.config=slate,autorun,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.cdrom
-    write /sys/class/android_usb/android0/iSerial cleanup
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions mass_storage
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=slate,autorun,mass_storage,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.cdrom
-    write /sys/class/android_usb/android0/iSerial cleanup
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions mass_storage
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=slate,serial,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.normal
-    write /sys/class/android_usb/android0/f_diag/clients  diag
-    write /sys/class/android_usb/android0/f_serial/transports smd,smd
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions serial,mass_storage,adb,diag
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=slate,serial,mass_storage,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.normal
-    write /sys/class/android_usb/android0/f_diag/clients  diag
-    write /sys/class/android_usb/android0/f_serial/transports smd,smd
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions serial,mass_storage,adb,diag
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-    
-on property:sys.usb.config=auth,serial,mass_storage
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.auth
-    write /sys/class/android_usb/android0/iSerial cleanup
-    write /sys/class/android_usb/android0/f_diag/clients  diag
-    write /sys/class/android_usb/android0/f_serial/transports smd,smd
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions serial,mass_storage,adb,diag
-    write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state $sys.usb.config
-
-on property:sys.usb.config=auth,serial,mass_storage,adb
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 12d1
-    write /sys/class/android_usb/android0/idProduct $ro.hw.usb.pid.auth
-    write /sys/class/android_usb/android0/iSerial cleanup
-    write /sys/class/android_usb/android0/f_diag/clients  diag
-    write /sys/class/android_usb/android0/f_serial/transports smd,smd
-    write /sys/class/android_usb/android0/f_mass_storage/nluns 1
-    write /sys/class/android_usb/android0/f_mass_storage/cdrom_index 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun0/file /system/cdrom/autorun.iso
-    write /sys/class/android_usb/android0/functions serial,mass_storage,adb,diag
-    write /sys/class/android_usb/android0/enable 1
-    start adbd
-    setprop sys.usb.state $sys.usb.config
-# /* DTS2012041000776 chenxi 20120410 end > */
 
 # Used to set USB configuration at boot and to switch the configuration
 # when changing the default configuration
@@ -755,6 +483,9 @@ service console /system/bin/sh
     disabled
     user shell
     group log
+
+on property:ro.debuggable=1
+    start console
 
 # adbd is controlled via property triggers in init.<platform>.usb.rc
 service adbd /sbin/adbd
@@ -849,7 +580,7 @@ service dbus /system/bin/dbus-daemon --system --nofork
     class main
     socket dbus stream 660 bluetooth bluetooth
     user bluetooth
-    group bluetooth net_bt_admin
+    group bluetooth net_bt_admin qcom_oncrpc
 
 service wlan_detect /system/bin/wlan_detect
     class main
@@ -890,7 +621,7 @@ service installd /system/bin/installd
 service racoon /system/bin/racoon
     class main
     socket racoon stream 600 system system
-    # IKE uses UDP port 500. Racoon will setuid to vpn after binding the port.
+# IKE uses UDP port 500. Racoon will setuid to vpn after binding the port.
     group vpn net_admin inet
     disabled
     oneshot
@@ -993,7 +724,7 @@ service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd -d -n
     socket dbus_bluetooth stream 660 bluetooth bluetooth
 # init.rc does not yet support applying capabilities, so run as root and
 # let bluetoothd drop uid to bluetooth with the right linux capabilities
-    group bluetooth net_bt_admin misc
+    group bluetooth net_bt_admin misc qcom_oncrpc
     disabled
     
 service hci_dev_up /system/bin/hci_dev_state --dev_up
@@ -1015,7 +746,8 @@ service BtWiRfServer /system/xbin/RfTest
 
 service rmt_oeminfo /system/bin/rmt_oeminfo
     class core
-    disabled
+    oneshot
+
 on property:ro.emmc=1
     start rmt_oeminfo
 
@@ -1048,7 +780,15 @@ service RescueStarter /system/bin/RescueStarter
 
 on property:ro.RescueStarter=1
     start RescueStarter
-    
+
+on property:service.adb.tcp.port=5555
+    stop adbd
+    start adbd
+on property:service.adb.tcp.port=-1
+    stop adbd
+    start adbd
+
+
 # Adding this in because adb is being removed from persist.sys.usb.config after booting
 on property:persist.service.adb.enable=1
     start adbd

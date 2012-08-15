@@ -79,17 +79,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/init.huawei.rc:root/init.huawei.rc \
     device/huawei/u8818/prebuilt/init.qcom.sh:root/init.qcom.sh \
-    device/huawei/u8818/prebuilt/adbd:root/adbd \
-    device/huawei/u8818/prebuilt/init:root/init \
-    device/huawei/u8818/prebuilt/init.goldfish.rc:root/init.goldfish.rc \
+    device/huawei/u8818/prebuilt/init.huawei.usb.rc:root/init.huawei.usb.rc \
     device/huawei/u8818/prebuilt/init.msm7627a.rc:root/init.msm7627a.rc \
-    device/huawei/u8818/prebuilt/init.msm7630.rc:root/init.msm7630.rc \
-    device/huawei/u8818/prebuilt/init.qcom.usb.rc:root/init.qcom.usb.rc \
-    device/huawei/u8818/prebuilt/init.qcom.usb.sh:root/init.qcom.usb.sh \
     device/huawei/u8818/prebuilt/init.rc:root/init.rc \
     device/huawei/u8818/prebuilt/init.target.rc:root/init.target.rc \
-	device/huawei/u8818/prebuilt/ueventd.goldfish.rc:root/ueventd.goldfish.rc \
-	device/huawei/u8818/prebuilt/ueventd.rc:root/ueventd.rc
+    device/huawei/u8818/prebuilt/ueventd.rc:root/ueventd.rc
 
 PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/system/wifi/dhd_4330.ko:system/wifi/dhd_4330.ko \

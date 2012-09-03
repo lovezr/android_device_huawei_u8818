@@ -185,7 +185,7 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/system/lib/modules/xc5000.ko:system/lib/modules/xc5000.ko
 
 PRODUCT_COPY_FILES += \
-    vendor/aokp/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
+    vendor/cm/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
 
 $(call inherit-product, build/target/product/full.mk)
 

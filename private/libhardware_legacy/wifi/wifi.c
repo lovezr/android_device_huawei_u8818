@@ -48,12 +48,12 @@ extern char *dhcp_lasterror();
 extern void get_dhcp_info();
 extern int init_module(void *, unsigned long, const char *);
 extern int delete_module(const char *, unsigned int);
-//extern void huawei_oem_rapi_streaming_function(int n, int p1, int p2, int p3, char *v1, int *v2, int *v3);
+extern void huawei_oem_rapi_streaming_function(int n, int p1, int p2, int p3, char *v1, int *v2, int *v3);
 
 static char iface[PROPERTY_VALUE_MAX];
 // TODO: use new ANDROID_SOCKET mechanism, once support for multiple
 // sockets is in
-#define WIFI_DRIVER_LOADER_DELAY    1000000
+
 #ifndef WIFI_DRIVER_MODULE_ARG
 #define WIFI_DRIVER_MODULE_ARG          ""
 #endif
@@ -150,6 +150,9 @@ char* get_samsung_wifi_type()
     if (strncmp(buf, "semcove", 7) == 0)
         return "_semcove";
 
+    if (strncmp(buf, "semcosh", 7) == 0)
+        return "_semcosh";
+
     return NULL;
 }
 #endif
@@ -159,7 +162,8 @@ static int insmod(const char *filename, const char *args)
     void *module;
     unsigned int size;
     int ret;
-
+    char x[8];
+    int  y;
     char mac_param[128];
     char cust_mac_param[128];
     module = load_file(filename, &size);
@@ -167,9 +171,16 @@ static int insmod(const char *filename, const char *args)
         return -1;
 
 	property_get("persist.sys.wifimac",cust_mac_param,"");
-
-    sprintf(mac_param,"mac_param=%s %s",cust_mac_param,args);
-
+	if(!strcmp(cust_mac_param,"")) {
+	        memset(x,0,8);
+	        y=0;
+	        huawei_oem_rapi_streaming_function(3,0,0,0,0,&y,x);
+	        //LOGI("QIWU:huawei_oem_rapi_streaming_function %p %x %x",x,x[0],y);
+	        sprintf(mac_param,"mac_param=%02X:%02X:%02X:%02X:%02X:%02X %s",x[5],x[4],x[3],x[2],x[1],x[0],args);
+	} else {
+                sprintf(mac_param,"mac_param=%s %s",cust_mac_param,args);
+        }
+        //LOGI("QIWU:Got MAC Address: %s ",mac_param);
         ret = init_module(module, size, mac_param);
 
     free(module);
@@ -692,7 +703,6 @@ int wifi_start_supplicant_common(const char *config_file)
     /* if service is running, then return 0*/
     if (property_get(SUPP_PROP_NAME, supp_status, NULL)
             && strcmp(supp_status, "running") == 0) {
-        LOGD("service %s is running now",SUPP_PROP_NAME);
         return 0;
     }
 
@@ -754,7 +764,6 @@ int wifi_start_supplicant_common(const char *config_file)
 
 int wifi_start_supplicant()
 {
-	//LOGD("k0:	wifi_start_supplicant");
     return wifi_start_supplicant_common(SUPP_CONFIG_FILE);
 }
 
@@ -765,7 +774,6 @@ int wifi_start_p2p_supplicant()
 
 int wifi_stop_supplicant()
 {
-	//	LOGD("k0:	wifi_stop_supplicant");
     char supp_status[PROPERTY_VALUE_MAX] = {'\0'};
     int count = 50; /* wait at most 5 seconds for completion */
 

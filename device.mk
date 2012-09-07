@@ -11,10 +11,12 @@ PRODUCT_LOCALES += hdpi
 
 # Video decoding
 PRODUCT_PACKAGES += \
-    libstagefrighthw \
-    libmm-omxcore \
     libOmxCore \
-    Torch
+    libOmxVenc \
+    libOmxVdec \
+    libmm-omxcore \
+    libdivxdrmdecrypt \
+    libstagefrighthw
     
 # Graphics 
 PRODUCT_PACKAGES += \
@@ -36,15 +38,20 @@ PRODUCT_PACKAGES += \
     dexpreopt \
     gps.u8818
 
-# Camera
-#PRODUCT_PACKAGES += \
-#        camera.msm7627a
+
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+    make_ext4fs \
+    setup_fs
 
 # Misc
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory 
 
-# Install the features available on this device.
+# we have enough storage space to hold precise GC data
+PRODUCT_TAGS += dalvik.gc.type-precise
+
+# These are the hardware-specific features
 PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \

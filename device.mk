@@ -152,7 +152,6 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/system/lib/libsc-a2xx.so:system/lib/libsc-a2xx.so \
     device/huawei/u8818/prebuilt/system/lib/libgsl.so:system/lib/libgsl.so \
     device/huawei/u8818/prebuilt/system/lib/modules/ansi_cprng.ko:system/lib/modules/ansi_cprng.ko \
-    device/huawei/u8818/prebuilt/system/lib/modules/cfg80211.ko:system/lib/modules/cfg80211.ko \
     device/huawei/u8818/prebuilt/system/lib/modules/dal_remotetest.ko:system/lib/modules/dal_remotetest.ko \
     device/huawei/u8818/prebuilt/system/lib/modules/evbug.ko:system/lib/modules/evbug.ko \
     device/huawei/u8818/prebuilt/system/lib/modules/gspca_main.ko:system/lib/modules/gspca_main.ko \

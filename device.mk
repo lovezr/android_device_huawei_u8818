@@ -12,10 +12,7 @@ PRODUCT_LOCALES += hdpi
 # Video decoding
 PRODUCT_PACKAGES += \
     libOmxCore \
-    libOmxVenc \
-    libOmxVdec \
     libmm-omxcore \
-    libdivxdrmdecrypt \
     libstagefrighthw
     
 # Graphics 
@@ -24,7 +21,10 @@ PRODUCT_PACKAGES += \
     copybit.msm7627a \
     hwcomposer.msm7627a \
     libtilerenderer \
-    libQcomUI
+    libQcomUI \
+	liboverlay \
+    libgenlock \
+    libmemalloc
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -47,6 +47,11 @@ PRODUCT_PACKAGES += \
 # Misc
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory 
+
+PRODUCT_PROPERTY_OVERRIDES += \
+       dalvik.vm.heapstartsize=5m \
+       dalvik.vm.heapgrowthlimit=36m \
+       dalvik.vm.heapsize=128m
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise

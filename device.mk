@@ -13,7 +13,7 @@ PRODUCT_LOCALES += hdpi
 PRODUCT_PACKAGES += \
     libOmxCore \
     libmm-omxcore \
-    libstagefrighthw
+    libstagefrighthw \
     libdivxdrmdecrypt \
     libOmxVdec \
     libOmxVenc

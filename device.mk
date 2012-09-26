@@ -24,8 +24,8 @@ PRODUCT_PACKAGES += \
     libQcomUI \
 	liboverlay \
     libgenlock \
-    libmemalloc
-
+    libmemalloc \
+	libI420colorconvert
 # Audio
 PRODUCT_PACKAGES += \
     audio.primary.msm7627a \

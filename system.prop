@@ -23,7 +23,7 @@ persist.sys.usb.config=mass_storage,adb
 persist.service.adb.enable=1
 
 # System
-dalvik.vm.heapsize=48m
+dalvik.vm.heapsize=64m
 dalvik.vm.dexopt-data-only=1
 
 # hold precise GC data, and use SMP

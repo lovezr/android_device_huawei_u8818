@@ -22,6 +22,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     gralloc.msm7627a \
     copybit.msm7627a \
+	lights.msm7627a \
     hwcomposer.msm7627a \
     libtilerenderer \
     libQcomUI \
@@ -39,14 +40,13 @@ PRODUCT_PACKAGES += \
 # Audio
 PRODUCT_PACKAGES += \
     audio.primary.msm7627a \
-    audio_policy.msm7627a \
     audio.a2dp.default \
     libaudioutils
 
 # Other
 PRODUCT_PACKAGES += \
     dexpreopt \
-    gps.c8812 \
+    gps.msm7627a \
     libloc_api-rpc \
     Camera
 
@@ -83,10 +83,12 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/init.msm7627a.rc:root/init.msm7627a.rc
 
 PRODUCT_COPY_FILES += \
+	device/huawei/u8818/cfg80211.ko:system/lib/modules/cfg80211.ko \
     device/huawei/u8818/prebuilt/system/wifi/dhd_4330.ko:system/wifi/dhd_4330.ko \
     device/huawei/u8818/prebuilt/system/wifi/fw_4330_b2.bin:system/wifi/fw_4330_b2.bin \
     device/huawei/u8818/prebuilt/system/wifi/nvram_4330.txt:system/wifi/nvram_4330.txt \
     device/huawei/u8818/prebuilt/system/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+	device/huawei/u8818/audio_policy.conf:system/etc/audio_policy.conf
     
 PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/system/etc/bluetooth/BCM4330.hcd:system/etc/bluetooth/BCM4330.hcd \

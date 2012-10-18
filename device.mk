@@ -111,6 +111,7 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/system/etc/init.qcom.wifi.sh:system/etc/init.qcom.wifi.sh \
     device/huawei/u8818/prebuilt/system/etc/vold.fstab:system/etc/vold.fstab \
     device/huawei/u8818/mediaprofiles/media_profiles.xml:system/etc/media_profiles.xml \
+	device/huawei/u8818/media_codecs.xml:system/etc/media_codecs.xml \
     device/huawei/u8818/prebuilt/system/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
 
 PRODUCT_COPY_FILES += \

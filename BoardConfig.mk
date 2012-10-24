@@ -32,7 +32,7 @@ TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 
 # Audio
-TARGET_USES_QCOM_LPA := true
+#TARGET_USES_QCOM_LPA := true
 
 # GPS
 BOARD_USES_QCOM_GPS := true
@@ -107,7 +107,7 @@ WIFI_DRIVER_FW_PATH_STA     := "/system/wifi/fw_4330_b2.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/system/wifi/fw_4330_b2.bin"
 #WIFI_DRIVER_FW_PATH_P2P     := "/system/wifi/fw_4330_b2.bin"
 
-#TARGET_CUSTOM_WIFI := ../../device/huawei/c8812/private/libhardware_legacy/wifi/wifi.c
+BOARD_USE_SERNUM_FOR_MAC := true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00C00000

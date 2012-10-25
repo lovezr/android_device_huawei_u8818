@@ -44,6 +44,10 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     libaudioutils
 
+# Power
+PRODUCT_PACKAGES += \
+	power.huawei
+
 # Other
 PRODUCT_PACKAGES += \
     dexpreopt \

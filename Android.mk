@@ -1,4 +1,4 @@
-
+LOCAL_PATH := $(call my-dir)
 ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),u8818)
-include $(call all-named-subdir-makefiles)
+include $(call all-makefiles-under,$(LOCAL_PATH))
 endif

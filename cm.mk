@@ -21,6 +21,6 @@ PRODUCT_RELEASE_NAME := U8818
 #Set build fingerprint / ID / Product Name ect.
 PRODUCT_BUILD_PROP_OVERRIDES += \
 	PRODUCT_NAME=u8818 \
-	BUILD_FINGERPRINT=huawei/u8818:4.0.4/IMM76L/223136:userdebug/test-keys \
-	PRIVATE_BUILD_DESC="huawei-user 4.0.4 IMM76L 223136 test-keys" \
+	BUILD_FINGERPRINT=huawei/u8818:4.1.2/JZO54K/223136:userdebug/release \
+	PRIVATE_BUILD_DESC="huawei-user 4.1.2 JZO54K 223136 release" \
 	BUILD_NUMBER=223136

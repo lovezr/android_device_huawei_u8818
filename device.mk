@@ -109,7 +109,6 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/init.msm7627a.rc:root/init.msm7627a.rc
 
 PRODUCT_COPY_FILES += \
-    device/huawei/u8818/prebuilt/system/wifi/bcmdhd.ko:system/wifi/bcmdhd.ko \
     device/huawei/u8818/prebuilt/system/wifi/fw_4330_b2.bin:system/wifi/fw_4330_b2.bin \
     device/huawei/u8818/prebuilt/system/wifi/nvram_4330.txt:system/wifi/nvram_4330.txt \
     device/huawei/u8818/prebuilt/system/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \

@@ -1,8 +1,11 @@
 #
 # system.prop for u8818
 #
+ro.vendor.extension_library=/system/lib/libqc-opt.so
 rild.libpath=/system/lib/libril-qc-1.so
 rild.libargs=-d /dev/smd0
+ro.config.hw_opta=17
+ro.config.hw_optb=156
 persist.rild.nitz_plmn=
 persist.rild.nitz_long_ons_0=
 persist.rild.nitz_long_ons_1=
@@ -21,6 +24,8 @@ ro.sf.lcd_density=240
 ro.opengles.version=131072
 ro.use_data_netmgrd=true
 ro.config.hw_omacp=1
+debug.composition.7x27A.type=mdp
+ro.hw_plat=7x27a
 
 media.stagefright.enable-player=true
 media.stagefright.enable-meta=false
@@ -32,7 +37,7 @@ media.stagefright.enable-qcp=true
 wifi.interface=eth0
 wifi.supplicant_scan_interval=15
 
-debug.camcorder.disablemeta=0
+debug.camcorder.disablemeta=1
 
 persist.sys.usb.config=mass_storage,adb
 
@@ -46,9 +51,16 @@ persist.sys.use_dithering=2
 com.qc.hardware=true
 gfx.highend_override=yes
 
-#ro.telephony.call_ring.delay=3000
+ro.telephony.call_ring.delay=false
 
 # af controller enable switcher
-#ro.config.camera.afctl.enable=true
+ro.config.camera.afctl.enable=true
 
 keyguard.no_require_sim=true
+ro.hwui.texture_cache_size=16
+ro.hwui.layer_cache_size=0
+ro.config.hw_camera_hdr=false
+
+ro.confg.hw_appsbootversion=U8818V100R001C17B926_APPSBOOT
+ro.confg.hw_appversion=U8818V100R001C17B926_KERNEL
+ro.confg.hw_appfsversion=U8818V100R001C17B926_SYSIMG

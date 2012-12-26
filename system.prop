@@ -68,3 +68,5 @@ ro.config.hw_camera_hdr=false
 ro.confg.hw_appsbootversion=U8818V100R001C17B926_APPSBOOT
 ro.confg.hw_appversion=U8818V100R001C17B926_KERNEL
 ro.confg.hw_appfsversion=U8818V100R001C17B926_SYSIMG
+
+audio.legacy.postproc=true

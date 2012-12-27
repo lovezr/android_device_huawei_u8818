@@ -9,7 +9,6 @@ DEVICE_PACKAGE_OVERLAYS += device/huawei/u8818/overlay
 PRODUCT_LOCALES += hdpi
 #PRODUCT_LOCALES := zh_CN zh_TW en_US
 
-# Video decoding
 PRODUCT_PACKAGES += \
     libOmxCore \
     libOmxVenc \
@@ -36,6 +35,7 @@ PRODUCT_PACKAGES += \
 	mm-video-driver-test \
 	mm-venc-omx-test720p \
 	mm-video-encdrv-test
+
 # Audio
 PRODUCT_PACKAGES += \
     audio.primary.msm7627a \
@@ -163,9 +163,6 @@ PRODUCT_COPY_FILES += \
     device/huawei/u8818/prebuilt/system/lib/libgsl.so:system/lib/libgsl.so \
     device/huawei/u8818/prebuilt/system/lib/egl/libGLESv2S3D_adreno200.so:system/lib/egl/libGLESv2S3D_adreno200.so \
     device/huawei/u8818/prebuilt/system/lib/libc2d2_z180.so:system/lib/libc2d2_z180.so
-
-PRODUCT_COPY_FILES += \
-    vendor/cm/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
 
 $(call inherit-product, build/target/product/full.mk)
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)

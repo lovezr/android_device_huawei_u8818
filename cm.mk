@@ -14,7 +14,7 @@ $(call inherit-product, vendor/cm/config/gsm.mk)
 PRODUCT_NAME := cm_u8818
 PRODUCT_DEVICE := u8818
 PRODUCT_BRAND := Huawei
-PRODUCT_MODEL := Huawei Ascend G300(u8818)
+PRODUCT_MODEL := Huawei U8818
 PRODUCT_MANUFACTURER := Huawei
 PRODUCT_RELEASE_NAME := U8818
 
